@@ -766,9 +766,9 @@ class Mail(commands.Cog):
             logging.exception("something fucked up")
             await ctx.send("something fucked up")
 
-@bot.command(name="hi", help="hi")
-async def hi(ctx):
-    await ctx.send("hi")
+#@bot.command(name="hi", help="hi")
+#async def hi(ctx):
+#    await ctx.send("hi")
 
 
 
