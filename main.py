@@ -934,56 +934,40 @@ async def iss(ctx):
 @bot.command(name="ytmp3", help="Converts yt link to mp3", usage="[link] [filename (Optional)]")
 async def ytmp3(ctx, url: str, filename: str = None):
     await ctx.send("hold on")
-    logging.info("ytmp3 command triggered.")
+    output_name = None
 
-    output_name = ""
-
-    try:
-        logging.info(f"Starting download for URL: {url}")
+    def download():
         with yt_dlp.YoutubeDL({'quiet': True, 'cookiefile': 'youtube_cookies.txt'}) as ydl:
             info = ydl.extract_info(url, download=False)
             video_title = info.get("title", "output")
-            logging.info(f"Video title: {video_title}")
-
             clean_filename = (filename or video_title).replace(" ", "_").replace("/", "_")
-            output_name = f"{clean_filename}.mp3"
-            logging.info(f"Output filename: {output_name}")
-
+            out = f"{clean_filename}.mp3"
             ydl_opts = {
-                'format': 'bestaudio/best',
-                'outtmpl': output_name,
-                'cookiefile': 'youtube_cookies.txt',
-                'postprocessors': [{
-                    'key': 'FFmpegExtractAudio',
-                    'preferredcodec': 'mp3',
-                }],
-                'quiet': True
-            }
+                    'format': 'bestaudio/best',
+                    'outtmpl': out,
+                    'cookiefile': 'youtube_cookies.txt',
+                    'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}],
+                    'quiet': True
+                    }
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl2:
+                ydl2.download([url])
+            return out
 
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
-        
-        file_size = os.path.getsize(output_name)
-        logging.info(f"File downloaded successfully. Size: {file_size} bytes")
+        try:
+            loop = asyncio.get_event_loop()
+            output_name = await loop.run_in_executor(None, download)
 
-        if file_size > 8 * 1024 * 1024:
-            logging.warning("File size exceeds 8MB limit.")
-            await ctx.send("too big file size!!!!!")
-        else:
-            logging.info("Sending file to Discord.")
-            await ctx.send(file=discord.File(output_name))
-            logging.info("File sent successfully.")
-
-    except Exception as e:
-        logging.error(f"An error occurred in ytmp3: {e}", exc_info=True)
-        await ctx.send("couldnt downloa :<")
-
-    finally:
-        if os.path.exists(output_name):
-            logging.info(f"Removing temporary file: {output_name}")
-            os.remove(output_name)
-        else:
-            logging.info("Temporary file not found, skipping removal.")
+            file_size = os.path.getsize(output_name)
+            if file_size > 8 * 1024 * 1024:
+                await ctx.send("too big file size!!!!!!")
+            else:
+                await ctx.send(file=discord.File(output_name))
+        except Exception as e:
+            logging.error(f"big ytmp3 bitch error: {e}", exc_info=True)
+            await ctx.send("coudnt downloa :<")
+        finally:
+            if output_name and os.path.exists(output_name):
+                os.remove(output_name)
 
 async def load_extensions():
     await bot.load_extension("cogs.fun")
