@@ -23,7 +23,7 @@ class SbView(discord.ui.View):
         await interaction.response.edit_message(embed=self.build_embed(), view=self)
 
     @discord.ui.button(label=">", style=discord.ButtonStyle.grey)
-    async def previous(self, interaction: discord.Interaction, button: discord.ui.Button):
+    async def next(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.index = (self.index + 1) % len(self.images)
         await interaction.response.edit_message(embed=self.build_embed(), view=self)
 
@@ -58,7 +58,7 @@ class Fun(commands.Cog):
         url = f"https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&tags={tag}&limit=100"
 
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as session:
+            async with session.get(url) as resp:
                 if resp.status != 200:
                     await ctx.send("asjdasdhajshd")
                     return
