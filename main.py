@@ -992,17 +992,17 @@ async def load_extensions():
 import asyncio
 asyncio.run(load_extensions())
 
-@bot.command(name="parrot", help="Parrots back what you say.")
-async def parrot(ctx, *, message: str):
-    await ctx.send(message)
+#@bot.command(name="parrot", help="Parrots back what you say.")
+#async def parrot(ctx, *, message: str):
+#    await ctx.send(message)
 
-@bot.command(name="dm", help="Sends a dm to someone.", usage="@recipient [message]")
-async def dm(ctx, user: discord.User, *, message: str):
-    try:
-        await user.send(message)
-        await ctx.send("pipe bomb sent")
-    except discord.Forbidden:
-        await ctx.send("tell them to let me in fiirsssttt.....")
+#@bot.command(name="dm", help="Sends a dm to someone.", usage="@recipient [message]")
+#async def dm(ctx, user: discord.User, *, message: str):
+#    try:
+#        await user.send(message)
+#        await ctx.send("pipe bomb sent")
+#   except discord.Forbidden:
+#        await ctx.send("tell them to let me in fiirsssttt.....")
 
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
