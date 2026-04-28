@@ -947,7 +947,8 @@ async def ytmp3(ctx, url: str, filename: str = None):
                     'outtmpl': out,
                     'cookiefile': 'youtube_cookies.txt',
                     'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}],
-                    'quiet': True
+                    'quiet': True,
+                    'extractor_args': {'youtube': {'player_client': ['web']}},
                     }
             with yt_dlp.YoutubeDL(ydl_opts) as ydl2:
                 ydl2.download([url])
