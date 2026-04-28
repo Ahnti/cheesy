@@ -126,10 +126,10 @@ async def ask(ctx, *, prompt: str):
         logging.exception("deepseek bugging ToT")
         await ctx.reply("What?")
 
-@bot.command(name='ping', help="returns bot latency", usage="")
-async def ping(ctx):
-    ping = int(round(bot.latency*1000, -2))
-    await ctx.send(f"Idk, {ping} something ms")
+#@bot.command(name='ping', help="returns bot latency", usage="")
+#async def ping(ctx):
+#    ping = int(round(bot.latency*1000, -2))
+#    await ctx.send(f"Idk, {ping} something ms")
 
 ball8 = ["yeah thats crazy", "ok", "<:true:1340351233877082167>", "???", "idonknow....", "maybe", "hell no",
              "fuck you", "hii :3", "this is why i love you", "oh", "does that make u smart now", "lmao", "lol",
