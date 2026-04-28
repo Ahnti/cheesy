@@ -940,7 +940,7 @@ async def ytmp3(ctx, url: str, filename: str = None):
 
     try:
         logging.info(f"Starting download for URL: {url}")
-        with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
+        with yt_dlp.YoutubeDL({'quiet': True, 'cookiefile': 'youtube_cookies.txt'}) as ydl:
             info = ydl.extract_info(url, download=False)
             video_title = info.get("title", "output")
             logging.info(f"Video title: {video_title}")
