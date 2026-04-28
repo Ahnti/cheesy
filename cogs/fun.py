@@ -38,15 +38,15 @@ class Fun(commands.Cog):
         await ctx.send(f"Idk, {ping} something ms")
 
     @commands.command(name="hi", help="hi", usage="hi")
-    async def hi(ctx):
+    async def hi(self, ctx):
         await ctx.send("hi")
        
     @commands.command(name="parrot", help="Parrots back what you say. Parrots back what you say.")
-    async def parrot(ctx, *, message: str):
+    async def parrot(self, ctx, *, message: str):
         await ctx.send(message)
 
     @commands.command(name="dm", help="Sends a dm to someone!", usage="@recipient [message]")
-    async def dm(ctx, user: discord.User, *, message: str):
+    async def dm(self, ctx, user: discord.User, *, message: str):
         try:
             await user.send(message)
             await ctx.send("pipe bomb sent")
