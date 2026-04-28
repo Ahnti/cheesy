@@ -953,21 +953,21 @@ async def ytmp3(ctx, url: str, filename: str = None):
                 ydl2.download([url])
             return out
 
-        try:
-            loop = asyncio.get_event_loop()
-            output_name = await loop.run_in_executor(None, download)
+    try:
+        loop = asyncio.get_event_loop()
+        output_name = await loop.run_in_executor(None, download)
 
-            file_size = os.path.getsize(output_name)
-            if file_size > 8 * 1024 * 1024:
-                await ctx.send("too big file size!!!!!!")
-            else:
-                await ctx.send(file=discord.File(output_name))
-        except Exception as e:
-            logging.error(f"big ytmp3 bitch error: {e}", exc_info=True)
-            await ctx.send("coudnt downloa :<")
-        finally:
-            if output_name and os.path.exists(output_name):
-                os.remove(output_name)
+        file_size = os.path.getsize(output_name)
+        if file_size > 8 * 1024 * 1024:
+            await ctx.send("too big file size!!!!!!")
+        else:
+            await ctx.send(file=discord.File(output_name))
+    except Exception as e:
+        logging.error(f"big ytmp3 bitch error: {e}", exc_info=True)
+        await ctx.send("coudnt downloa :<")
+    finally:
+        if output_name and os.path.exists(output_name):
+            os.remove(output_name)
 
 async def load_extensions():
     await bot.load_extension("cogs.fun")
