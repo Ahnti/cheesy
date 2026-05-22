@@ -972,7 +972,7 @@ async def ytmp3(ctx, url: str, filename: str = None):
 
 async def load_extensions():
     await bot.load_extension("cogs.fun")
-    await bot.load_extension("cogs.util")
+    await bot.load_extension("cogs.utils")
     await bot.add_cog(Mail(bot))
 
 import asyncio
