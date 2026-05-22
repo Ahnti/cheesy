@@ -28,6 +28,7 @@ Jinja2==3.1.6
 logging==0.4.9.6
 MarkupSafe==3.0.2
 multidict==6.6.4
+motor
 propcache==0.3.2
 proto-plus==1.26.1
 protobuf==5.29.5
