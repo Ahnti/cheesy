@@ -103,29 +103,6 @@ async def image(ctx, *, query):
             image_url = random.choice(results)["urls"]["regular"]
             await ctx.send(image_url)
 
-@bot.command(name='ask', help="this command is very dead")
-async def ask(ctx, *, prompt: str):
-    try:
-        response = requests.post(
-            url="https://openrouter.ai/api/v1/chat/completions",
-            headers={
-                "Authorization": "Bearer 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"
-            },
-            data=json.dumps({
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
-            })
-        )
-        answer = response.choices[0].message.content
-        await ctx.reply(answer)
-    except Exception as e:
-        logging.exception("deepseek bugging ToT")
-        await ctx.reply("What?")
-
 #@bot.command(name='ping', help="returns bot latency", usage="")
 #async def ping(ctx):
 #    ping = int(round(bot.latency*1000, -2))
@@ -376,7 +353,7 @@ def get_contextual_prompt(history, message_content, is_mentioned, guild_id, user
         if has_question:
             prompt += "They asked you a question. Answer it naturally and conversationally.\n"
         else:
-            prompt += "React naturally to what they said. Keep it short and casual."
+            prompt += "React naturally to what they said."
         
         prompt += "Respond as Cheesecake:"
     else:
