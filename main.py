@@ -531,7 +531,8 @@ async def on_message(message):
                     "max_output_tokens": 300,
                 }
                 
-                response = model.generate_content(
+                response = await asyncio.to_thread(
+                    model.generate_content,
                     prompt,
                     generation_config=generation_config
                 )
