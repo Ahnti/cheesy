@@ -16,6 +16,7 @@ import re
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import google.generativeai as genai
+import time
 
 from keep_alive import keep_alive
 import asyncio
@@ -536,6 +537,8 @@ async def on_message(message):
                     prompt,
                     generation_config=generation_config
                 )
+
+                start = time.monotonic()
                 
                 print(f"Gemini took {time.monotonic() - start:.2f} seconds")
                 
