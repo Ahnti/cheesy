@@ -537,6 +537,8 @@ async def on_message(message):
                     generation_config=generation_config
                 )
                 
+                print(f"Gemini took {time.monotonic() - start:.2f} seconds")
+                
                 response_text = response.text.strip()
                 response_text = clean_response(response_text)
 
