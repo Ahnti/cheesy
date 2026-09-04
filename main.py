@@ -509,7 +509,7 @@ async def on_message(message):
     #if message.author == bot.user:
     #    return
     
-    if should_respond:
+    if should_respond and is_ai_enabled(message.guild.id):
         history = "\n".join(conversation_logs.get(message.channel.id, []))
         try:
             async with message.channel.typing():
@@ -832,6 +832,33 @@ async def chord(ctx, root_and_type: str, degree: str):
         await ctx.send(chord_name)
     except Exception as e:
         await ctx.send(f"dumbass {e}")
+
+
+ai_enabled = {}
+def is_ai_enabled(guild_id):
+    guild_id = str(guild_id)
+    return ai_enabled.get(guild_id, True)
+
+@bot.command(name="aitoggle", help="turns cheesecake's ai on/off, but like...do you really need to turn me off..haha.....", usage="[on/off]")
+@commands.has_permissions(manage_messages=True)
+async def aitoggle(ctx, state: str):
+    guild_id = str(ctx.guild.id)
+    state = state.lower()
+
+    if state not in ("on", "off"):
+        await ctx.send("on or off")
+        return
+
+    ai_enabled[guild_id] = (state == "on")
+
+    if state == "off":
+        await ctx.send("ok... going dark...")
+    else:
+        await ctx.send("IM BACK!!!")
+@aitoggle.error
+async def aitoggle_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("no PERMS no BITCHES!! FUCK you for even trying")
 
 @bot.command(name="remove", help="removes set amount of messages before and including the command (needs admin)", usage="[num]")
 @commands.has_permissions(manage_messages=True)
