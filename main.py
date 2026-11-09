@@ -354,7 +354,7 @@ def get_contextual_prompt(history, message_content, is_mentioned, guild_id, user
         if has_question:
             prompt += "They asked you a question. Answer it naturally and conversationally.\n"
         else:
-            prompt += "React naturally to what they said."
+            prompt += "React how you'd react. Match their tone."
         
         prompt += "Respond as Cheesecake:"
     else:
@@ -367,10 +367,10 @@ def get_contextual_prompt(history, message_content, is_mentioned, guild_id, user
         
         if history:
             prompt += f"Recent conversation:\n{history}\n\n"
-            prompt += "You're reading this conversation. Chime in naturally with a brief comment or reaction. "
-            prompt += "Don't force it - just add to the conversation like you're part of the group chat.\n"
+            prompt += "You're reading this conversation. Chime in and match their tone."
+            #prompt += "Don't force it - just add to the conversation like you're part of the gro.\n"
         else:
-            prompt += "Join the conversation. Say something brief.\n"
+            prompt += "Join the conversation. Say something brief. Match their tone.\n"
         prompt += "Respond as Cheesecake:"
     
     return prompt
